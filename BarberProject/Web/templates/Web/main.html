@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Барбершоп</title>
+    <link rel="stylesheet" href='static/css/base.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header с навигацией -->
+<header class="bg-dark text-white">
+    <nav class="navbar navbar-expand-lg navbar-dark container">
+        <a class="navbar-brand" href="#">Барбершоп</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">О Барбершопе</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#masters">Мастера</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#booking">Запись</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Контакты</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="container my-5">
+
+    <!-- About Section -->
+    <section id="about" class="mb-5">
+        <h2>О нашем Барбершопе</h2>
+        <p>Добро пожаловать в наш барбершоп, где традиции сочетаются с современными стилями. Мы предлагаем классические стрижки и бритье, а также самые современные тренды в мужской моде.</p>
+    </section>
+
+    <!-- Masters Section -->
+    <section id="masters" class="mb-5">
+        <h2>Наши Мастера</h2>
+        <div class="row">
+            {% for master in masters %}
+            <div class="col-md-4">
+                <div class="card" style="margin-bottom:10px">
+                    {% if master.photo %}
+                    <img src="{{ master.photo.url }}" class="card-img-top" alt="{{ master.first_name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="No Photo">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ master.first_name }} {{ master.last_name }}</h5>
+                        <p class="card-text">{{ master.specialty }}</p>
+                        <p class="card-text">{{ master.bio }}</p>
+                        <p class="card-text"><strong>Контактная информация:</strong> {{ master.contact_info }}</p>
+                        <h6>Услуги:</h6>
+                        <ul>
+                            {% for service in master.services.all %}
+                            <li>{{ service.name }} - {{ service.price }} руб.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section id="booking" class="mb-5">
+        <h2>Записаться на прием</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Ваше имя</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Телефон</label>
+                <input type="text" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="master" class="form-label">Выберите мастера</label>
+                <select class="form-select" id="master" name="master" required>
+                    {% for master in masters %}
+                    <option value="{{ master.id }}">{{ master.first_name }} {{ master.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="service" class="form-label">Выберите услугу</label>
+                <select class="form-select" id="service" name="service" required>
+                    {% for service in services %}
+                    <option value="{{ service.id }}">{{ service.name }} - {{ service.price }} руб.</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Записаться</button>
+        </form>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer id="contact" class="bg-dark text-white text-center py-4">
+    <p>Контакты: +7(843)-123-45-67 | email@barbershop.com</p>
+    <p>Мы в социальных сетях:</p>
+    <a href="#" class="text-white me-3">VK</a>
+    <a href="#" class="text-white me-3">TG</a>
+    <a href="#" class="text-white">Twitter</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="static/js/service_fetch.js"></script>
+</body>
+</html>
