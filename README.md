@@ -1,6 +1,3 @@
-Вот обновлённый вариант README для проекта **Barber_Web_TgBot**:
-
----
 
 # Barber_Web_TgBot
 
