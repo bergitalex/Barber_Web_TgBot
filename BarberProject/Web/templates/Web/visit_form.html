@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ action }} запись</title>
+</head>
+<body>
+
+    <h1>{{ action }} запись</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Форма для создания/редактирования/просмотра записи -->
+
+        {% if action == 'Создать' %}
+            <button type="submit">Создать запись</button>
+        {% elif action == 'Редактировать' %}
+            <button type="submit">Сохранить изменения</button>
+        {% endif %}
+    </form>
+
+    {% if action == 'Просмотр' %}
+        <a href="{% url 'visit_update' object.pk %}">Редактировать</a>
+        <a href="{% url 'visit_delete' object.pk %}">Удалить</a>
+    {% endif %}
+
+</body>
+</html>

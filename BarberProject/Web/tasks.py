@@ -7,7 +7,7 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 
-async def send_telegram_message(name, phone, master_name, service_name):
+async def send_telegram_message(name, phone, master_name, service_name, appointment_date):
     try:
         # Создаем экземпляр бота с токеном
         bot = telegram.Bot(token=settings.TELEGRAM_BOT_TOKEN)
@@ -18,7 +18,8 @@ async def send_telegram_message(name, phone, master_name, service_name):
             f'Имя: {name}\n'
             f'Телефон: {phone}\n'
             f'Мастер: {master_name}\n'
-            f'Услуга: {service_name}'
+            f'Услуга: {service_name}\n'
+            f'Время: {appointment_date}'
         )
 
         # Отправляем сообщение в указанный чат с использованием await

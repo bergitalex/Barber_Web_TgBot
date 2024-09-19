@@ -1,3 +1,16 @@
 html {
     scroll-behavior: smooth;
 }
+
+.visit_create_button {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: block;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.visit_create_button:hover {
+    color: #ccc;  /* Цвет текста при наведении */
+    text-decoration: underline;  /* Подчёркивание при наведении */
+}
